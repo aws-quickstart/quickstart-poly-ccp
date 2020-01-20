@@ -1,0 +1,14 @@
+[
+    {
+        "ParameterKey": "AmazonConnectInstanceAlias",
+        "ParameterValue": "taskcat"
+    },
+    {
+        "ParameterKey": "HostedZone",
+        "ParameterValue": ""
+    },
+    {
+        "ParameterKey": "AmazonConnectDomainName",
+        "ParameterValue": ""
+    }
+]

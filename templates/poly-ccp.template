@@ -1,8 +1,33 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-
   "Description": "Poly for Amazon Connect Quick Start. AWS CloudFormation Template \"Poly Integrated Amazon Connect CCP.template\" which will deploy the Poly Amazon Connect CCP https web site to your AWS account. NOTE: For this template the AWS region must be US East (N. Virginia) - us-east-1. Please ensure you select this region before deploying, or deployment will fail.",
-
+  "Metadata": {
+    "AWS::CloudFormation::Interface": {
+      "ParameterGroups": [
+        {
+          "Label": {
+            "default": "Poly CCP Configuration"
+          },
+          "Parameters": [
+            "AmazonConnectInstanceAlias",
+            "HostedZone",
+            "AmazonConnectDomainName"
+          ]
+        }
+      ],
+      "ParameterLabels": {
+        "AmazonConnectInstanceAlias": {
+          "default": "Amazoon Connect Instance Alias"
+        },
+        "HostedZone": {
+          "default": "Route 53 Hosted Zone"
+        },
+        "AmazonConnectDomainName": {
+          "default": "Hosted Zone Subdomain"
+        }
+      }
+    }
+  },
   "Parameters": {
     "AmazonConnectInstanceAlias": {
       "Type": "String",
@@ -18,12 +43,11 @@
     },
     "AmazonConnectDomainName": {
       "Type": "String",
-      "Description": "A sub-domain for your hosted zone, e.g. amazonconnect.example.com - Will be used to create a CNAME (Alternate Name) in your hosted zone to reach your https Poly-integrated Amazon Connect CCP. Note: this CNAME should not exist already.",
+      "Description": "A subdomain for your hosted zone, e.g. amazonconnect.example.com - Will be used to create a CNAME (Alternate Name) in your hosted zone to reach your https Poly-integrated Amazon Connect CCP. Note: this CNAME should not exist already.",
       "AllowedPattern": "(?!-)[a-zA-Z0-9-.]{0,63}(?<!-)",
       "ConstraintDescription": "This parameter is optional but if provided must be a valid DNS sub-domain name which will be created under your hosted zone during deployment."
     }
   },
-
   "Conditions" : {
 	"NoHostedZoneCondition" : { 
 		"Fn::Equals" : [
