@@ -21,7 +21,7 @@ Metadata:
           - QSS3KeyPrefix
     ParameterLabels:
       AmazonConnectInstanceAlias:
-        default: Amazoon Connect Instance Alias
+        default: Amazon Connect Instance Alias
       HostedZone:
         default: Route 53 Hosted Zone
       AmazonConnectDomainName:

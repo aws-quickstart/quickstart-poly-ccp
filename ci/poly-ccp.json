@@ -10,5 +10,9 @@
     {
         "ParameterKey": "AmazonConnectDomainName",
         "ParameterValue": ""
+    },
+    {
+        "ParameterKey": "QSS3BucketName",
+        "ParameterValue": "$[taskcat_autobucket]"
     }
 ]
