@@ -4,7 +4,7 @@ Description: >-
   Amazon Connect CCP.template" which will deploy the Poly Amazon Connect CCP https
   web site to your AWS account. NOTE: For this template the AWS region must be US
   East (N. Virginia) - us-east-1. Please ensure you select this region before deploying,
-  or deployment will fail.
+  or deployment will fail. (qs-1qhm59itf)
 Metadata:
   AWS::CloudFormation::Interface:
     ParameterGroups:
