@@ -1,0 +1,17 @@
+project:
+  name: quickstart-poly-ccp
+  owner: quickstart-eng@amazon.com
+  package_lambda: false
+  regions:
+  - us-east-1
+  s3_bucket: ''
+tests:
+  wsus-master:
+    parameters:
+      AmazonConnectInstanceAlias: taskcat
+      QSS3BucketName: $[taskcat_autobucket]
+      QSS3BucketRegion: $[taskcat_current_region]
+    regions:
+    - us-east-1
+    s3_bucket: ''
+    template: templates/poly-ccp.template
