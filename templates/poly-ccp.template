@@ -18,7 +18,6 @@ Metadata:
           default: Quick Start Configuration
         Parameters:
           - QSS3BucketName
-          - QSS3BucketRegion
           - QSS3KeyPrefix
     ParameterLabels:
       AmazonConnectInstanceAlias:
@@ -29,8 +28,6 @@ Metadata:
         default: Hosted Zone Subdomain
       QSS3BucketName:
         default: Quick Start S3 Bucket Name
-      QSS3BucketRegion:
-        default: Quick Start S3 Bucket Region
       QSS3KeyPrefix:
         default: Quick Start S3 Key Prefix
 Parameters:
@@ -51,6 +48,7 @@ Parameters:
     AllowedPattern: (?!-)[a-zA-Z0-9-.]{0,63}(?<!-)
     ConstraintDescription: This parameter is optional but if provided must be a valid
       DNS zone name hosted within your AWS Console > Route 53.
+    Default: ''
   AmazonConnectDomainName:
     Type: String
     Description: >-
@@ -60,15 +58,12 @@ Parameters:
     AllowedPattern: (?!-)[a-zA-Z0-9-.]{0,63}(?<!-)
     ConstraintDescription: This parameter is optional but if provided must be a valid
       DNS sub-domain name which will be created under your hosted zone during deployment.
+    Default: ''
   QSS3BucketName:
     Type: String
     Description: Quick Start S3 Bucket Name
     AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
     Default: aws-quickstart
-  QSS3BucketRegion:
-    Default: 'us-east-1'
-    Description: The AWS Region where the Quick Start S3 bucket (QSS3BucketName) is hosted. When using your own bucket, you must specify this value.
-    Type: String
   QSS3KeyPrefix:
     Type: String
     Description: Quick Start S3 Key Prefix
@@ -271,17 +266,17 @@ Resources:
     Properties:
       DistributionConfig:
         Comment: CDN for S3-backed website
-        Enabled: 'true'
+        Enabled: true
         DefaultCacheBehavior:
           ForwardedValues:
-            QueryString: 'true'
+            QueryString: true
           TargetOriginId: only-origin
           ViewerProtocolPolicy: redirect-to-https
         DefaultRootObject: index.html
         Origins:
           - CustomOriginConfig:
-              HTTPPort: '80'
-              HTTPSPort: '443'
+              HTTPPort: 80
+              HTTPSPort: 443
               OriginProtocolPolicy: http-only
             DomainName: !GetAtt 'S3BucketForWebsiteContent.DomainName'
             Id: only-origin
@@ -296,17 +291,17 @@ Resources:
           - !Join
             - ''
             - - !Ref 'AmazonConnectDomainName'
-        Enabled: 'true'
+        Enabled: true
         DefaultCacheBehavior:
           ForwardedValues:
-            QueryString: 'true'
+            QueryString: true
           TargetOriginId: only-origin
           ViewerProtocolPolicy: redirect-to-https
         DefaultRootObject: index.html
         Origins:
           - CustomOriginConfig:
-              HTTPPort: '80'
-              HTTPSPort: '443'
+              HTTPPort: 80
+              HTTPSPort: 443
               OriginProtocolPolicy: http-only
             DomainName: !GetAtt 'S3BucketForWebsiteContent.DomainName'
             Id: only-origin
