@@ -6,6 +6,10 @@ Description: >-
   East (N. Virginia) - us-east-1. Please ensure you select this region before deploying,
   or deployment will fail. (qs-1qhm59itf)
 Metadata:
+  cfn-lint:
+    config:
+      ignore_checks:
+        - W9006
   AWS::CloudFormation::Interface:
     ParameterGroups:
       - Label:
@@ -110,7 +114,7 @@ Resources:
               Service: lambda.amazonaws.com
             Action: sts:AssumeRole
       ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - !Sub arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
       Path: /
       Policies:
         - PolicyName: lambda-copier
@@ -128,13 +132,13 @@ Resources:
                   - s3:PutObject
                   - s3:DeleteObject
                 Resource:
-                  - !Sub 'arn:aws:s3:::${LambdaZipsBucket}/${QSS3KeyPrefix}*'
+                  - !Sub 'arn:${AWS::Partition}:s3:::${LambdaZipsBucket}/${QSS3KeyPrefix}*'
   CopyZipsFunction:
     Type: AWS::Lambda::Function
     Properties:
       Description: Copies objects from a source S3 bucket to a destination
       Handler: index.handler
-      Runtime: python3.9
+      Runtime: python3.8
       Role: !GetAtt 'CopyZipsRole.Arn'
       Timeout: 240
       Code:
@@ -197,6 +201,11 @@ Resources:
         ErrorDocument: error.html
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks:
+            - EPolicyWildcardPrincipal
     Properties:
       PolicyDocument:
         Id: MyPolicy
@@ -208,7 +217,7 @@ Resources:
             Action: s3:GetObject
             Resource: !Join
               - ''
-              - - 'arn:aws:s3:::'
+              - - !Sub 'arn:${AWS::Partition}:s3:::'
                 - !Ref 'S3BucketForWebsiteContent'
                 - /*
       Bucket: !Ref 'S3BucketForWebsiteContent'
@@ -226,8 +235,8 @@ Resources:
             - sts:AssumeRole
       Path: /
       ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
-        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        - !Sub arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - !Sub arn:${AWS::Partition}:iam::aws:policy/AmazonS3FullAccess
   AmazonConnectDeploymentFunction:
     DependsOn: CopyZips
     Type: AWS::Lambda::Function
@@ -239,7 +248,7 @@ Resources:
         Variables:
           BUCKET_NAME: !GetAtt 'S3BucketForWebsiteContent.DomainName'
           AMAZON_CONNECT_INSTANCE_ALIAS: !Ref 'AmazonConnectInstanceAlias'
-      Runtime: python3.9
+      Runtime: python3.8
       Timeout: 60
       Code:
         S3Bucket: !Ref 'LambdaZipsBucket'
@@ -322,7 +331,7 @@ Resources:
         - ''
         - - !Ref 'AmazonConnectDomainName'
       Type: CNAME
-      TTL: '300'
+      TTL: 300
       ResourceRecords:
         - !GetAtt 'WebsiteCDNWithDomain.DomainName'
 Outputs:
