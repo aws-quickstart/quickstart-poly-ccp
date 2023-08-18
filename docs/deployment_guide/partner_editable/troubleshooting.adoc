@@ -1,0 +1,53 @@
+// Add any unique troubleshooting steps here.
+
+For troubleshooting common Partner Solution issues, refer to the https://fwd.aws/rA69w?[AWS Partner Solution General Information Guide^] and https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html[Troubleshooting CloudFormation^].
+
+// == Resources
+// Uncomment section and add links to any external resources that are specified by the partner.
+
+== Security
+
+The Poly-integrated Amazon Connect CCP that is deployed with this Partner Solution is served by CloudFront in your AWS account using an *HTTPS SSL* certificate. This ensures that Amazon Connect CCP functions correctly, as *HTTPS* is a prerequisite for the Amazon Connect CCP.
+
+The connection to Amazon Streams API also uses https encryption to exchange messages about ongoing call states with your Amazon Connect instance.
+
+== Supporting the QD feature on Poly DA Series headsets
+
+If you want to have the Quick Disconnect (QD) feature automatically change your agent status in the Poly-integrated Amazon Connect CCP, you need to define the *Available* and *Offline* agent statuses. In your Amazon Connect instance, choose *Overview*, and choose *Login as
+Administrator*. On the left menu, choose *Users*, and then choose *Agent Status*.
+
+[#extra1]
+.Agent status menu
+image::../docs/deployment_guide/images/image11.png[Extra]
+
+These two statuses are required because they are hard-coded in the index.html file that is in the S3 bucket. If your setup requires different status names for the Available and Offline states, you can edit the index.html file. For state.name, replace "Available" and "Offline" with the values that your setup uses.
+
+----
+ agent.getAgentStates().filter(function (state) {
+    if (state.name === "Available") {
+        agentStateCollection.Available = state;
+    }
+    else if (state.name === "Offline") {
+        agentStateCollection.Offline = state;
+    }
+ });
+----
+
+After you modify index.html, you must create an invalidation to ensure the change is picked up.
+On the console, choose CloudFront.
+
+1. Choose the CloudFront ID for the distribution that contains the Poly-integrated Amazon Connect CCP Quick Start.
+2. Choose the *Invalidations* tab.
+3. Choose *Create Invalidation*, and enter the following:
+
+----
+/index.html
+/
+----
+
+[#extra2]
+.Creating the invalidation
+image::../docs/deployment_guide/images/image12.png[Extra]
+
+4. Choose *Invalidate*. After a short delay your changes to index.html will be propagated
+to the edge servers and available in your browser, if you refresh

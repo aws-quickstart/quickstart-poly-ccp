@@ -1,0 +1,84 @@
+// Include any postdeployment steps here, such as steps necessary to test that the deployment was successful. If there are no postdeployment steps, leave this file empty.
+
+== Postdeployment steps
+
+[#postdeploy1]
+.AWS CloudFormation events
+image::../docs/deployment_guide/images/image1.png[Postdeploy]
+
+=== Additional steps for deployment option 2
+
+* The status for the second deployment option will reach CREATE_IN_PROGRESS but will pause at CertificateForCDN creation. The deployment requires an extra, manual step to reach CREATE_COMPLETE.
+
+1. On the console, choose *Certificate Manager*, and locate the new certificate with the domain name you have specified. The Validation state will be *Pending validation*.
+
+[#postdeploy2]
+.Certificate pending validation
+image::../docs/deployment_guide/images/image2.png[Postdeploy]
+
+2. Expand the drop-down menu to the left of the domain and choose *Create record on Route 53*. A success message appears.
+
+[#postdeploy3]
+.Successful creation of Route53 record
+image::../docs/deployment_guide/images/image3.png[Postdeploy]
+
+After a few minutes, the certificate will show the status *Issued*.
+
+At this point the stack creation will automatically resume. On the CloudFront console, you should see a new CloudFront distribution.
+
+[#postdeploy4]
+.CloudFront distribution
+image::../docs/deployment_guide/images/image4.png[Postdeploy]
+
+=== Completing the deployment
+
+1. On the AWS CloudFormation console, when the status is *CREATE_COMPLETE*, the Poly-integrated Amazon Connect CCP cluster is ready.
+2. Use the URLs displayed in the *Outputs tab* for the stack to view the resources that were created.
+3. Copy the *WebSiteURL* value that is displayed on the *Outputs* tab.
+
+[#postdeploy5]
+.Poly-integrated Amazon Connect CCP outputs after successful deployment
+image::../docs/deployment_guide/images/image5.png[Postdeploy]
+
+[start=4]
+4. On the Amazon Connect console, choose your Amazon Connect instance, choose *Application Integration*, and then choose *Add origin*.
+5. Paste the website URL that you copied earlier, and then choose *Add*.
+
+[#postdeploy6]
+.Adding the website “origin” to the Amazon Connect instance settings
+image::../docs/deployment_guide/images/image6.png[Postdeploy]
+
+=== Test the deployment
+
+1. In Chrome or Firefox, visit the link that is displayed on the Outputs tab, e.g., https://myamazonconnect.mydomain.com. The first time you do so, you might need to enable popups in the browser so that the Amazon Connect CCP login box can be displayed.
+
+[#postdeploy7]
+.Poly-integrated CCP with popup prompt
+image::../docs/deployment_guide/images/image7.png[Postdeploy]
+
+Once you have enabled pop-ups, the login will popup in a second tab.
+
+1. Enter your Amazon Connect user credentials. To find your credentials, log in to your Amazon Connect instance as *Administrator*, choose *Users*, and then choose *User Management*.
+
+[#postdeploy8]
+.Amazon Connect sign-in page
+image::../docs/deployment_guide/images/image8.png[Postdeploy]
+
+[start=2]
+2. Choose *Sign In*. After you have signed in, you can close the second tab, and the Amazon Connect CCP will appear embedded in the Poly-integrated Amazon Connect CCP page.
+
+[#postdeploy9]
+.Poly-integrated CCP
+image::../docs/deployment_guide/images/image9.png[Postdeploy]
+
+[start=3]
+3. Move the *Log* slider at the bottom of the screen to the right to confirm that you have connection to both Amazon and Plantronics Hub.
+
+[#postdeploy10]
+.Logs verifying access to Amazon and Poly resources
+image::../docs/deployment_guide/images/image10.png[Postdeploy]
+
+You can now benefit from headset button call control support with Poly headsets.
+
+* For a full list of features, refer to the documentation in the https://github.com/plantronics/pdc/tree/master/Amazon%20Connect%20Sample[Plantronics GitHub repository].
+* For documentation and installation notes on the use of Plantronics Hub with Poly (including Poly or Plantronics-branded) headsets, refer to the https://www.plantronics.com/us/en/support/downloads-apps/hub-desktop[Plantronics Hub documentation].

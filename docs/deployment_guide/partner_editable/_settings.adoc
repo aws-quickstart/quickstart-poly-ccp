@@ -1,0 +1,17 @@
+:partner-solution-project-name: quickstart-poly-ccp
+:partner-solution-github-org: aws-quickstart
+:partner-product-name: Poly-Integrated Amazon Connect CCP on the AWS Cloud
+:partner-product-short-name: Connect CCP
+:partner-company-name: Poly
+:doc-month: August
+:doc-year: 2023
+:partner-contributors: Lewis Collins, {partner-company-name}
+// :other-contributors: Akua Mansa, Trek10
+//:aws-contributors: Janine Singh, AWS IoT Partner team
+:aws-ia-contributors: Dave May, AWS Integration & Automation team
+:deployment_time: 30 minutes
+:default_deployment_region: us-east-1
+// :private_repo:
+
+
+// For instructions on creating this deployment guide, refer to "Build your AWS Partner Solution documentation" (https://aws-ia-us-west-2.s3.us-west-2.amazonaws.com/docs/content/index.html#/).
