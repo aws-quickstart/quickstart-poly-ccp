@@ -1,0 +1,6 @@
+// Edit this placeholder text as necessary to describe the deployment options.
+
+This Partner Solution provides the following deployment option:
+
+* https://fwd.aws/AE7DB?[Deploy the Poly-integrated Amazon Connect CCP to your AWS account without a domain name]. This option creates an S3 bucket to hold the Amazon Connect CCP web site content. Then it creates a CloudFront HTTPS website distribution to serve the Amazon Connect CCP to your users via a generic CloudFront URL (e.g., https://d30xq3p1yhx8d8.cloudfront.net).
+* https://fwd.aws/AE7DB?[Deploy the Poly-integrated Amazon Connect CCP to your AWS account with a domain name that is already added as a hosted zone in your AWS account’s Route 53 service]. This option creates an S3 bucket to hold the Amazon Connect CCP website content. Then it creates a CloudFront HTTPS web site distribution to serve the Amazon Connect CCP to your users via your chosen subdomain name, e.g. https://myamazonconnect.mydomain.com.

@@ -1,0 +1,12 @@
+This Partner Solution reference deployment guide provides step-by-step instructions for deploying the Poly-integrated Amazon Connect Contact Control Panel (CCP) on the AWS Cloud.
+
+This Partner Solution is for users who have already configured an Amazon Connect instance in their AWS account and want to enable support for Poly Remote Call Control (RCC), which provides headset button call control.
+
+=== Poly-integrated Amazon Connect CCP on AWS
+
+The Partner Solution deploys a small website into your AWS account, consisting of a Poly integrated version of the https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-contact-control-panel.html[Amazon Connect CCP]. The website integrates Poly with AmazonConnect CCP by combining the https://github.com/aws/amazon-connect-streams[Amazon Connect Streams application programming interface (API)] and the https://developer.plantronics.com/softphone-integration-api-overview[Plantronics Hub API].
+
+During the deployment of the Partner Solution, you’re prompted for your Amazon Connect instance alias and optional custom domain name information. This allows the Poly website that is deployed into your AWS account to integrate with your Amazon Connect instance and, optionally, to be served from your existing custom domain. This Partner Solution provides the following benefits:
+
+* Poly (including Poly or Plantronics-branded) headset support, providing correct headset button controls and audio path enablement
+* The Poly-integrated Amazon Connect CCP, served via a highly available, scalable Amazon CloudFront website distribution with Secure Sockets Layer (SSL) security

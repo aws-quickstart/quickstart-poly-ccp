@@ -1,0 +1,17 @@
+:xrefstyle: short
+
+Deploying this Partner Solution with *your Amazon Connect instance alias* and *optional custom domain name information* as parameters (the second deployment option) builds the following environment in the AWS Cloud to serve the Poly-integrated Amazon Connect CCP.
+
+// Replace this example diagram with your own. Follow our wiki guidelines: https://w.amazon.com/bin/view/AWS_Quick_Starts/Process_for_PSAs/#HPrepareyourarchitecturediagram. Upload your source PowerPoint file to the GitHub {deployment name}/docs/images/ directory in its repository.
+
+[#architecture1]
+.Partner Solution architecture for {partner-product-short-name} on AWS
+image::../docs/deployment_guide/images/architecture_diagram.png[Architecture]
+
+As shown in <<architecture1>>, this Partner Solution sets up the following:
+
+* A highly available, scalable CloudFront HTTPS website distribution to serve Polyintegrated Amazon Connect CCP, by default with the price class for edge servers in the United States, Canada, and Europe. To manually edit the template to change the price class, see the AWS documentation.
+* An S3 bucket containing the website content for the CloudFront distribution. The Partner Solution loads the current version of the Poly-integrated Amazon Connect CCP into the S3 bucket. *Note* The Partner Solution also deploys two AWS Lambda functions and execution
+roles: one to copy the website content from the source bucket to a staging bucket, and another to copy the files from the staging bucket to the site’s S3 bucket.
+* An optional CNAME (Alternate Name) record in Route 53 in the chosen hosted zone in the form mysubdomain.mydomain.com. The CNAME is used to access Poly-integrated Amazon Connect CCP.
+* A certificate under Certificate Manager for the subdomain name, to enable HTTPS for the CloudFront distribution. When you specify the optional hosted zone subdomain name, the Partner Solution sets up the certificate.
